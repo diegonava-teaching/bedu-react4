@@ -16,6 +16,8 @@ function App() {
 
       setData(dataResponse);
     } catch (error) {
+      //TODO: Add error handler to show an alert if something goes wrong
+      //TODO: Also take into account that you should take care about 'data' to be an array in case something goes wrong
       console.log('App.js (11) - error', error);
     }
   };
@@ -28,11 +30,13 @@ function App() {
 
   //componentDidUpdate
   useEffect(() => {
+    // const isSuccessShownStillActive = data.length !== 202 && isSuccessShown
     if (data.length !== 202 && isSuccessShown) return setIsSuccessShown(false);
   }, [data, isSuccessShown]);
 
   //componentDidUpdate
   useEffect(() => {
+    // const shouldShowSuccess = data.length === 202
     if (data.length === 202) return setIsSuccessShown(true);
   }, [data]);
 
@@ -52,6 +56,7 @@ function App() {
   const todoCounting = data.length;
 
   //TODO: Add loading spinner while we are waiting for the data
+
   return (
     <div style={{ textAlign: 'center' }}>
       {/* {isCountDownShown ? <Countdown /> : null} */}
@@ -73,6 +78,7 @@ function App() {
       {isSuccessShown && <div>Sigue asi!</div>}
       <br />
 
+      {/* //TODO: Put this part in a function handler instead: _todoList */}
       {data.map((todoItem) => {
         return <div key={todoItem.id}>- {todoItem.title}</div>;
       })}
