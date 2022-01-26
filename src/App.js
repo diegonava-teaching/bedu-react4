@@ -26,10 +26,12 @@ function App() {
     handleGetData();
   }, []);
 
+  //componentDidUpdate
   useEffect(() => {
     if (data.length !== 202 && isSuccessShown) return setIsSuccessShown(false);
   }, [data, isSuccessShown]);
 
+  //componentDidUpdate
   useEffect(() => {
     if (data.length === 202) return setIsSuccessShown(true);
   }, [data]);
