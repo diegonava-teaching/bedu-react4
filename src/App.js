@@ -28,12 +28,10 @@ function App() {
 
   useEffect(() => {
     if (data.length !== 202 && isSuccessShown) return setIsSuccessShown(false);
-    console.log('componentDidUpdate');
   }, [data, isSuccessShown]);
 
   useEffect(() => {
     if (data.length === 202) return setIsSuccessShown(true);
-    console.log('componentDidUpdate');
   }, [data]);
 
   // const handleRemoveCounter = () => {
