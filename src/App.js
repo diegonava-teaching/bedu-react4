@@ -3,22 +3,38 @@ import Countdown from './components/Countdown';
 
 function App() {
   const [data, setData] = useState([]);
+  console.log('App.js (4) - data', data);
   // const [isCountDownShown, setIsCountDownShown] = useState(true);
   const [isSuccessShown, setIsSuccessShown] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(true);
+
   const handleGetData = async () => {
     try {
-      const response = await fetch(
-        'https://jsonplaceholder.typicode.com/todos'
+      const todos = await fetch('https://jsonplaceholder.typicode.com/todos');
+
+      const todosData = await todos.json();
+      console.log('App.js (15) - todosData', todosData);
+
+      if (!todosData) throw new Error();
+
+      console.log('asd');
+      setData(todosData);
+      setIsLoading(false);
+    } catch (e) {
+      setData([]);
+      setIsLoading(false);
+
+      //Ugly syntax
+      alert(
+        'Ups, hubo un error al intentar traer tus datos! Intenta de nuevo mas tarde\n\n' +
+          e
       );
 
-      const dataResponse = await response.json();
-
-      setData(dataResponse);
-    } catch (error) {
-      //TODO: Add error handler to show an alert if something goes wrong
-      //TODO: Also take into account that you should take care about 'data' to be an array in case something goes wrong
-      console.log('App.js (11) - error', error);
+      //ES6: Template Literals - Desired syntax
+      alert(
+        `Ups, hubo un error al intentar traer tus datos! Intenta de nuevo mas tarde\n\n${e}`
+      );
     }
   };
 
@@ -56,6 +72,8 @@ function App() {
   const todoCounting = data.length;
 
   //TODO: Add loading spinner while we are waiting for the data
+
+  if (isLoading) return <div>Loading..</div>;
 
   return (
     <div style={{ textAlign: 'center' }}>
